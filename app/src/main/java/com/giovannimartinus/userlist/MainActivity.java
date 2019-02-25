@@ -214,10 +214,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // onClick method to create new user
     public void createUser(View view) {
         newUserLayout.setVisibility(View.VISIBLE);
     }
 
+    // onClick method to add new user to ListView
     public void addUser(View view) {
         newUserLayout.setVisibility(View.GONE);
 
