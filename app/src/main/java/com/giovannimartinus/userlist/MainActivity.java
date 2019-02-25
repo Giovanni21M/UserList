@@ -72,6 +72,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+        private void newAvatar(String url) {
+            DownloadImage downloadImage = new DownloadImage();
+            Bitmap bitmap;
+
+            try {
+                bitmap = downloadImage.execute(url).get();
+                avatars.add(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // create custom Adapter to pass both ImageView and TextView to ListView
@@ -231,11 +243,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (Patterns.WEB_URL.matcher(imgUrl).matches()) {
             fullNames.add(nameText.getText().toString());
-            imgUrls.add(imgUrl);
 
-            Toast.makeText(MainActivity.this, "NEW USER ADDED", Toast.LENGTH_SHORT);
+            itemList.newAvatar(imgUrl);
 
             listView.setAdapter(new CustomAdapter(fullNames, avatars));
+
+            Toast.makeText(MainActivity.this, "NEW USER ADDED", Toast.LENGTH_SHORT);
         } else {
             Toast.makeText(MainActivity.this, imgUrl + " is not a URL, please add a URL.", Toast.LENGTH_SHORT);
         }
