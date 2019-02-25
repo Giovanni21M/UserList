@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
     final ItemList itemList = new ItemList();
     final DownloadTask downloadTask = new DownloadTask();
 
-    private Button addButton;
-    private Button submitButton;
     private ListView listView;
     private RelativeLayout newUserLayout;
 
@@ -259,9 +257,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        addButton = (Button) findViewById(R.id.addButton);
-        submitButton = (Button) findViewById(R.id.submitButton);
+        
         listView = (ListView) findViewById(R.id.listView);
         newUserLayout = (RelativeLayout) findViewById(R.id.newUserLayout);
 
