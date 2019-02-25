@@ -228,5 +228,11 @@ public class MainActivity extends AppCompatActivity {
         imgUrls = new ArrayList<String>();
         fullNames = new ArrayList<String>(length);
         avatars = new ArrayList<Bitmap>();
+        
+        try {
+            downloadTask.execute("https://reqres.in/api/users");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
