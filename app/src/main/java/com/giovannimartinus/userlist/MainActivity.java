@@ -22,6 +22,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    final ItemList itemList = new ItemList();
+    final DownloadTask downloadTask = new DownloadTask();
+
     private Button addButton;
     private Button submitButton;
     private ListView listView;
@@ -30,7 +33,21 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> firstNames;
     private ArrayList<String> lastNames;
     private ArrayList<String> imgUrls;
+    private ArrayList<String> fullNames;
 
+    private int length;
+
+    private class ItemList {
+
+        // concatenate firstNames and lastNames into a new ArrayList
+        private void concatenateLists() {
+            length = firstNames.size();
+
+            for (int i = 0; i < length; i++) {
+                fullNames.add(firstNames.get(i) + " " + lastNames.get(i));
+            }
+        }
+    }
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
         @Override
@@ -94,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
                     imgUrls.add(imgUrl);
                 }
 
+                itemList.concatenateLists();
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -114,5 +133,6 @@ public class MainActivity extends AppCompatActivity {
         firstNames = new ArrayList<String>();
         lastNames = new ArrayList<String>();
         imgUrls = new ArrayList<String>();
+        fullNames = new ArrayList<String>(length);
     }
 }
