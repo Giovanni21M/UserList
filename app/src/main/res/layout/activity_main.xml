@@ -10,8 +10,73 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.giovannimartinus.userlist.MainActivity">
 
-    <TextView
+    <Button
+        android:text="Add User"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="41dp"
+        android:layout_weight="1"
+        android:id="@+id/addButton"
+        android:onClick="createUser" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:layout_weight="1"
+        android:layout_marginTop="100dp"
+        android:id="@+id/listView" />
+
+    <TextView
+        android:text="User List"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="49dp"
+        android:id="@+id/textView"
+        android:textSize="36sp"
+        android:layout_weight="1"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:id="@+id/newUserLayout">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/nameText"
+            android:hint="Name" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/urlText"
+            android:layout_below="@+id/nameText"
+            android:layout_alignParentStart="true"
+            android:hint="Image URL" />
+
+        <Button
+            android:text="Submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/submitButton"
+            android:layout_below="@+id/urlText"
+            android:layout_alignParentStart="true"
+            android:onClick="addUser" />
+
+    </RelativeLayout>
 </RelativeLayout>
