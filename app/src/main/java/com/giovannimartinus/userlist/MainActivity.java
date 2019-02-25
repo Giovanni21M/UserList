@@ -1,6 +1,7 @@
 package com.giovannimartinus.userlist;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> lastNames;
     private ArrayList<String> imgUrls;
     private ArrayList<String> fullNames;
+    private ArrayList<Bitmap> avatars;
 
     private int length;
 
@@ -46,6 +48,49 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < length; i++) {
                 fullNames.add(firstNames.get(i) + " " + lastNames.get(i));
             }
+        }
+
+        // download images and add to ArrayList of bitmaps
+        private void avatarDownload() {
+            for (int i = 0; i < fullNames.size(); i++) {
+                DownloadImage downloadImage = new DownloadImage();
+                Bitmap bitmap;
+
+                try {
+                    bitmap = downloadImage.execute(imgUrls.get(i)).get();
+                    avatars.add(bitmap);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            Bitmap bitmap;
+            URL url;
+            HttpURLConnection urlConnection;
+
+            try {
+                // connect to browser with given url
+                url = new URL(urls[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.connect();
+
+                // read&&download the input stream and convert to bitmap
+                InputStream inputStream = urlConnection.getInputStream();
+                bitmap = BitmapFactory.decodeStream(inputStream);
+
+                return bitmap;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
         }
     }
 
@@ -111,7 +156,9 @@ public class MainActivity extends AppCompatActivity {
                     imgUrls.add(imgUrl);
                 }
 
+                // add names and images urls to ArrayLists
                 itemList.concatenateLists();
+                itemList.avatarDownload();
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -134,5 +181,6 @@ public class MainActivity extends AppCompatActivity {
         lastNames = new ArrayList<String>();
         imgUrls = new ArrayList<String>();
         fullNames = new ArrayList<String>(length);
+        avatars = new ArrayList<Bitmap>();
     }
 }
