@@ -232,10 +232,16 @@ public class MainActivity extends AppCompatActivity {
         if (Patterns.WEB_URL.matcher(imgUrl).matches()) {
             fullNames.add(nameText.getText().toString());
             imgUrls.add(imgUrl);
+
             Toast.makeText(MainActivity.this, "NEW USER ADDED", Toast.LENGTH_SHORT);
+
+            listView.setAdapter(new CustomAdapter(fullNames, avatars));
         } else {
             Toast.makeText(MainActivity.this, imgUrl + " is not a URL, please add a URL.", Toast.LENGTH_SHORT);
         }
+
+        nameText.setText("");
+        urlText.setText("");
     }
 
 
