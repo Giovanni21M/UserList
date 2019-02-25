@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -212,6 +214,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void createUser(View view) {
+        newUserLayout.setVisibility(View.VISIBLE);
+    }
+
+    public void addUser(View view) {
+        newUserLayout.setVisibility(View.GONE);
+
+        TextView nameText, urlText;
+        nameText = (TextView) findViewById(R.id.nameText);
+        urlText = (TextView) findViewById(R.id.urlText);
+
+        String imgUrl = (String) urlText.getText().toString();
+
+        if (Patterns.WEB_URL.matcher(imgUrl).matches()) {
+            fullNames.add(nameText.getText().toString());
+            imgUrls.add(imgUrl);
+            Toast.makeText(MainActivity.this, "NEW USER ADDED", Toast.LENGTH_SHORT);
+        } else {
+            Toast.makeText(MainActivity.this, imgUrl + " is not a URL, please add a URL.", Toast.LENGTH_SHORT);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         imgUrls = new ArrayList<String>();
         fullNames = new ArrayList<String>(length);
         avatars = new ArrayList<Bitmap>();
-        
+
         try {
             downloadTask.execute("https://reqres.in/api/users");
         } catch (Exception e) {
