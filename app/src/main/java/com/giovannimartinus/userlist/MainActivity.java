@@ -5,9 +5,15 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,6 +70,43 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    // create custom Adapter to pass both ImageView and TextView to ListView
+    public class CustomAdapter extends BaseAdapter {
+        ArrayList<String> names;
+        ArrayList<Bitmap> avatars;
+
+        public CustomAdapter(ArrayList<String> names, ArrayList<Bitmap> avatars) {
+            this.names = names;
+            this.avatars = avatars;
+        }
+
+        public int getCount() {
+            return names.size();
+        }
+
+        public Object getItem(int arg0) {
+            return null;
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = getLayoutInflater();
+
+            View row = inflater.inflate(R.layout.custom, parent, false);
+            TextView namesView = (TextView) row.findViewById(R.id.names);
+            ImageView avatarsView = (ImageView) row.findViewById(R.id.avatars);
+
+            namesView.setText(names.get(position));
+            avatarsView.setImageBitmap(avatars.get(position));
+
+            return row;
+        }
+
     }
 
     public class DownloadImage extends AsyncTask<String, Void, Bitmap> {
@@ -159,6 +202,9 @@ public class MainActivity extends AppCompatActivity {
                 // add names and images urls to ArrayLists
                 itemList.concatenateLists();
                 itemList.avatarDownload();
+
+                // call custom adapter
+                listView.setAdapter(new CustomAdapter(fullNames, avatars));
 
             } catch (JSONException e) {
                 e.printStackTrace();
