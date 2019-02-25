@@ -241,17 +241,14 @@ public class MainActivity extends AppCompatActivity {
 
         String imgUrl = (String) urlText.getText().toString();
 
-        if (Patterns.WEB_URL.matcher(imgUrl).matches()) {
-            fullNames.add(nameText.getText().toString());
+        fullNames.add(nameText.getText().toString());
 
-            itemList.newAvatar(imgUrl);
+        itemList.newAvatar(imgUrl);
 
-            listView.setAdapter(new CustomAdapter(fullNames, avatars));
+        listView.setAdapter(new CustomAdapter(fullNames, avatars));
 
-            Toast.makeText(MainActivity.this, "NEW USER ADDED", Toast.LENGTH_SHORT);
-        } else {
-            Toast.makeText(MainActivity.this, imgUrl + " is not a URL, please add a URL.", Toast.LENGTH_SHORT);
-        }
+        Toast.makeText(MainActivity.this, "NEW USER ADDED", Toast.LENGTH_SHORT);
+
 
         nameText.setText("");
         urlText.setText("");
